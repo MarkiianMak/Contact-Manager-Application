@@ -1,0 +1,121 @@
+﻿@{
+	ViewData["Title"] = "Home Page";
+
+
+}
+
+@model List<UserData>
+
+@if (TempData["ErrorMessage"] != null)
+{
+	<div class="alert alert-dismissible alert-warning text-xxl-center mt-4">
+		<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+		<h4 class="alert-heading">Alert!</h4>
+		<p class="mb-0">@TempData["ErrorMessage"] </p>
+	</div>
+}
+
+<table class="table table-hover mt-5">
+	<thead>
+		<tr>
+			<th scope="col" onclick="sortTable(0, true)">№</th>
+			<th scope="col" onclick="sortTable(1)">Name</th>
+			<th scope="col" onclick="sortTable(2)">Date of Birth</th>
+			<th scope="col" onclick="sortTable(3)">Married</th>
+			<th scope="col" onclick="sortTable(4)">Phone Number</th>
+			<th scope="col" onclick="sortTable(5)">Salary</th>
+			<th scope="col">EDIT</th>
+			<th scope="col">DELETE</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var userData in Model)
+		{
+			<tr class="table-secondary" data-id="@userData.Id">
+
+				<td>
+					@userData.Id
+				</td>
+
+
+				<td class="name">
+					@userData.Name
+				</td>
+				<td class="date">
+					@userData.DateOfBirth
+				</td>
+				@if (userData.IsMarried)
+				{
+					<td class="isMarried">
+						Yes
+					</td>
+				}
+				else
+				{
+					<td class="isMarried">
+						No
+					</td>
+				}
+				<td class="phoneNumber">
+					@userData.PhoneNumber
+				</td>
+				<td class="salary">
+					@userData.Salary
+				</td>
+				<td>
+
+					<button class="btn btn-primary edit-btn"> Edit </button>
+					<button class="btn btn-sm btn-success save-btn" style="display:none;">Save</button>
+
+				</td>
+				<td>
+					<button class="btn btn-sm btn-secondary cancel-btn" style="display:none;">Cancel</button>
+					<button class="btn btn-danger delete-btn" data-bs-toggle="modal" data-bs-target="#myModal"> Delete </button>
+				</td>
+			</tr>
+		}
+
+	</tbody>
+</table>
+
+
+
+<div id="myModal" class="modal fade bd-example-modal-sm" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title ">Confirmation</h3>
+				<button type="button" class="btn-close close-btn" data-bs-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true"></span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p>Are you sure you want to delete this data?</p>
+			</div>
+			<div class="modal-footer d-flex justify-content-evenly">
+				<button type="button" class="btn btn-primary save-changes-btn " data-bs-dismiss="modal">Yes</button>
+				<button type="button" class="btn btn-danger cancel-changes-btn" data-bs-dismiss="modal">No</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<form asp-controller="UploadCsv" asp-action="ImportCsv" method="post" enctype="multipart/form-data" class="p-4 border rounded shadow-sm bg-light w-50 mx-auto mt-5">
+
+	<div class="mb-3 text-center">
+		<label for="csvFile" class="form-label fw-bold">Choose your CSV file</label>
+		<input class="form-control" type="file" name="file" id="csvFile" accept=".csv" />
+	</div>
+
+	<div class="text-center">
+		<button type="submit" class="btn btn-primary btn-lg">Import</button>
+	</div>
+
+</form>
+
+
+<script src="~/js/sortTable.js" asp-append-version="true"></script>
+<script src="~/js/edit.js" asp-append-version="true"></script>
+<script src="~/js/delete.js" asp-append-version="true"></script>
+
