@@ -19,13 +19,13 @@ $(document).on("click", ".save-changes-btn", function () {
 					$(this).remove();
 				});
 			} else {
-				alert("Помилка видалення");
+				alert("An error occured. Cannot delete");
 			}
 			rowToDelete = null;
 			idToDelete = null;
 		},
 		error: function () {
-			alert("Помилка оновлення!");
+			alert("An error occured. Cannot delete");
 		}
 	});
 });

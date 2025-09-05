@@ -102,7 +102,7 @@ $(document).on("click", ".save-btn", function () {
 			row.find(".edit-btn, .delete-btn").show();
 		},
 		error: function () {
-			alert("Помилка оновлення!");
+			alert("An error occured while trying to update database");
 		}
 	});
 });
